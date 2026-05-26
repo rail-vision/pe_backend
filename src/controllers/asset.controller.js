@@ -21,7 +21,7 @@ const createAsset = async (req, res) => {
     } = req.body;
 
     // Auto-generate assetId
-    const generatedAssetId = `AST-${Date.now()}`; // simple, always unique
+    const generatedAssetId = `AST-${Date.now()}`; 
 
     const data = {
       ...rest,
