@@ -16,6 +16,7 @@ npx prisma init
 Configured .env file with PostgreSQL connection string:
 
 DATABASE_URL="postgresql://postgres:password@localhost:5432/enterprise_management_system"
+
 3. Prisma Schema Design
 
 Created Prisma models/schemas for:
@@ -40,6 +41,7 @@ This:
 created database tables
 synchronized Prisma schema with PostgreSQL
 generated Prisma Client
+
 5. Prisma Client Configuration
 
 Configured reusable Prisma connection:
@@ -49,6 +51,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 module.exports = prisma;
+
 6. CRUD API Development
 
 Built backend APIs for all modules using:
@@ -65,13 +68,8 @@ CREATE
 UPDATE
 DELETE
 
-for:
+for:Income,Expense, Supplier, Data Asset,Inventory Schema
 
-Income
-Expense
-Supplier
-Data Asset
-Inventory
 7. Validation Layer
 
 Implemented Joi validation for:
@@ -82,6 +80,7 @@ email validations
 percentage validations
 date validations
 duplicate prevention
+
 8. Duplicate Prevention
 
 Added duplicate checks and unique validations for:
@@ -96,6 +95,7 @@ using:
 
 Prisma unique constraints
 backend validation logic
+
 9. Database Relationships
 
 Implemented relational mapping such as:
@@ -106,6 +106,7 @@ using:
 
 foreign keys
 Prisma relational models
+
 10. API Testing
 
 Tested APIs using Postman for:
@@ -115,6 +116,7 @@ invalid requests
 CRUD operations
 duplicate entries
 validation errors
+
 11. Prisma Studio Integration
 
 Used Prisma Studio to:
@@ -131,6 +133,7 @@ npx prisma studio
 Prisma Studio runs on:
 
 http://localhost:5555
+
 12. Dynamic Backend Preparation
 
 Prepared backend architecture for:
