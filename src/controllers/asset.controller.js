@@ -44,7 +44,12 @@ const createAsset = async (req, res) => {
       ...rest
     } = req.body;
 
+<<<<<<< HEAD
     /* Auto Generate Asset ID */
+=======
+    // Auto-generate assetId
+    const generatedAssetId = `AST-${Date.now()}`; 
+>>>>>>> 4458a3ff67d4738888af330e031114ac785f5305
 
     const generatedAssetId = `AST-${Date.now()}`;
 
