@@ -7,12 +7,124 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum AssetCategory {
-  CIVIL
-  MECHANICAL
-  ELECTRO_MECHANICAL
-  ELECTRICAL
-  ELECTRONICS
+model Asset {
+
+  id                             String   @id @default(uuid())
+
+  assetId                        String   @unique
+
+  assetCode                      String
+
+  ownerId                        String
+
+  assetName                      String
+
+  assetDescription               String
+
+  purchaseDate                   DateTime
+
+  assetCurrency                  String
+
+  purchaseValue                  Float
+
+  currentValue                   Float
+
+  depreciation                   Float
+
+  assetLife                      Int
+
+  assetLiquidityLevel            Float
+
+  annualAssetUsageLevel          Float
+
+  assetManufacturer              String
+
+  assetManufacturingCountry      String
+
+  assetWarrantyPeriod            Int
+
+  assetMaintenanceContract       Boolean
+
+  assetMaintenanceContractor     String?
+
+  assetAnnualMaintenanceCost     Float?
+
+  expectedMeanTimeBetweenFailure Float
+
+  assetCategory                  String
+
+  assetDimensions                String
+
+  assetWeight                    String
+
+  assetLocationGPS               String
+
+  assetLocationAddress           String
+
+  createdAt                      DateTime @default(now())
+
+  updatedAt                      DateTime @updatedAt
+}
+
+model People {
+
+  id                     String       @id @default(uuid())
+
+  personId               String       @unique
+
+  employeeCode           String?
+
+  personName             String
+
+  personStatus           PersonStatus
+
+  designation            String
+
+  designationDescription String?
+
+  workStatus             WorkStatus
+
+  personAddress          String
+
+  country                String
+
+  functionalUnit         String
+
+  startDate              DateTime
+
+  workEmail              String       @unique
+
+  personalEmail          String?
+
+  workPhone              String
+
+  expertise              String
+
+  workPeriod             WorkPeriod
+
+  driversLicense         Boolean
+
+  createdAt              DateTime     @default(now())
+
+  updatedAt              DateTime     @updatedAt
+}
+
+model employees {
+
+  id         Int       @id @default(autoincrement())
+
+  name       String?   @db.VarChar(255)
+
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model students {
+
+  id         Int       @id @default(autoincrement())
+
+  name       String?   @db.VarChar(255)
+
+  created_at DateTime? @default(now()) @db.Timestamp(6)
 }
 
 enum PersonStatus {
@@ -29,106 +141,4 @@ enum WorkPeriod {
   DAY_ONLY
   NIGHT_ONLY
   FLEXIBLE
-}
-
-model Asset {
-
-  id String @id @default(uuid())
-
-  assetId String @unique
-
-  assetCode String
-
-  ownerId String
-
-  assetName String
-
-  assetDescription String
-
-  purchaseDate DateTime
-
-  assetCurrency String
-
-  purchaseValue Float
-
-  currentValue Float
-
-  depreciation Float
-
-  assetLife Int
-
-  assetLiquidityLevel Float
-
-  annualAssetUsageLevel Float
-
-  assetManufacturer String
-
-  assetManufacturingCountry String
-
-  assetWarrantyPeriod Int
-
-  assetMaintenanceContract Boolean
-
-  assetMaintenanceContractor String?
-
-  assetAnnualMaintenanceCost Float?
-
-  expectedMeanTimeBetweenFailure Float
-
-  assetCategory AssetCategory
-
-  assetDimensions String
-
-  assetWeight String
-
-  assetLocationGPS String
-
-  assetLocationAddress String
-
-  createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
-}
-
-model People {
-
-  id String @id @default(uuid())
-
-  personId String @unique
-
-  employeeCode String?
-
-  personName String
-
-  personStatus PersonStatus
-
-  designation String
-
-  designationDescription String?
-
-  workStatus WorkStatus
-
-  personAddress String
-
-  country String
-
-  functionalUnit String
-
-  startDate DateTime
-
-  workEmail String @unique
-
-  personalEmail String?
-
-  workPhone String
-
-  expertise String
-
-  workPeriod WorkPeriod
-
-  driversLicense Boolean
-
-  createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
 }

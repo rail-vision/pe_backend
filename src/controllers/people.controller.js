@@ -1,5 +1,9 @@
 const peopleService = require("../services/people.service");
 
+const peopleSchema = require("../validations/people.validation");
+
+/*GET ALL PEOPLE*/
+
 const getPeople = async (req, res) => {
 
   try {
@@ -23,6 +27,8 @@ const getPeople = async (req, res) => {
   }
 
 };
+
+/*GET SINGLE PERSON*/
 
 const getPerson = async (req, res) => {
 
@@ -50,9 +56,15 @@ const getPerson = async (req, res) => {
 
 };
 
+/*CREATE PERSON*/
+
 const createPerson = async (req, res) => {
 
   try {
+
+    /*Validate Request Body*/
+
+    peopleSchema.parse(req.body);
 
     const person = await peopleService.createPerson(
       req.body
@@ -67,18 +79,24 @@ const createPerson = async (req, res) => {
 
     console.log(error);
 
-    res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Failed to create person"
+      message: error.message
     });
 
   }
 
 };
 
+/*UPDATE PERSON*/
+
 const updatePerson = async (req, res) => {
 
   try {
+
+    /*Partial Validation For Update*/
+
+    peopleSchema.partial().parse(req.body);
 
     const person = await peopleService.updatePerson(
       req.params.id,
@@ -94,20 +112,24 @@ const updatePerson = async (req, res) => {
 
     console.log(error);
 
-    res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Failed to update person"
+      message: error.message
     });
 
   }
 
 };
 
+/* DELETE */
+
 const deletePerson = async (req, res) => {
 
   try {
 
-    await peopleService.deletePerson(req.params.id);
+    await peopleService.deletePerson(
+      req.params.id
+    );
 
     res.status(200).json({
       success: true,
