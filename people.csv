@@ -1,0 +1,4 @@
+employeeCode,personName,personStatus,designation,designationDescription,workStatus,personAddress,country,functionalUnit,startDate,workEmail,personalEmail,workPhone,expertise,workPeriod,driversLicense
+EMP-001,Rahul Sharma,FULL_TIME,Senior Developer,Develops and maintains software,ACTIVE,123 MG Road New Delhi,India,Engineering,2022-03-01,rahul@company.com,rahul@gmail.com,9876543210,JavaScript NodeJS React,DAY_ONLY,true
+EMP-002,Priya Singh,FULL_TIME,HR Manager,Manages human resources,ACTIVE,456 Park Street Mumbai,India,HR,2021-07-15,priya@company.com,priya@gmail.com,9876543211,Recruitment Training,FLEXIBLE,false
+EMP-003,Amit Kumar,PART_TIME,Financial Analyst,Analyzes financial data,NON_ACTIVE,789 Anna Salai Chennai,India,Finance,2023-01-10,amit@company.com,amit@gmail.com,9876543212,Excel SAP Finance,DAY_ONLY,false

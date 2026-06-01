@@ -1,17 +1,12 @@
 const {
-  insertDynamicData
+  createTable
 } = require("../services/dynamic.service");
 
-const insert = async (req, res) => {
+const createDynamicTable = async (req, res) => {
 
   try {
 
-    const { tableName } = req.params;
-
-    const result = await insertDynamicData(
-      tableName,
-      req.body
-    );
+    const result = await createTable(req.body);
 
     res.status(201).json({
       success: true,
@@ -30,5 +25,5 @@ const insert = async (req, res) => {
 };
 
 module.exports = {
-  insert
+  createDynamicTable
 };

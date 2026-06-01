@@ -2,8 +2,7 @@ const prisma = require("../prisma/client");
 
 const assetSchema = require("../validations/asset.validation");
 
-/*GET ALL ASSETS */
-
+/* GET ALL ASSETS */
 
 const getAllAssets = async (req, res) => {
 
@@ -27,13 +26,13 @@ const getAllAssets = async (req, res) => {
 
 };
 
-/*CREATE ASSET*/
+/* CREATE ASSET */
 
 const createAsset = async (req, res) => {
 
   try {
 
-    /*Validate Request Body*/
+    /* Validate Request Body */
 
     assetSchema.parse(req.body);
 
@@ -44,16 +43,11 @@ const createAsset = async (req, res) => {
       ...rest
     } = req.body;
 
-<<<<<<< HEAD
     /* Auto Generate Asset ID */
-=======
-    // Auto-generate assetId
-    const generatedAssetId = `AST-${Date.now()}`; 
->>>>>>> 4458a3ff67d4738888af330e031114ac785f5305
 
     const generatedAssetId = `AST-${Date.now()}`;
 
-    /*Duplicate Asset ID Check*/
+    /* Duplicate Asset ID Check */
 
     const existingAsset = await prisma.asset.findUnique({
       where: {
@@ -70,7 +64,7 @@ const createAsset = async (req, res) => {
 
     }
 
-    /*Prepare Data*/
+    /* Prepare Data */
 
     const data = {
 
@@ -88,7 +82,7 @@ const createAsset = async (req, res) => {
 
     };
 
-    /*Create Asset*/
+    /* Create Asset */
 
     const asset = await prisma.asset.create({
       data
@@ -110,7 +104,7 @@ const createAsset = async (req, res) => {
 
 };
 
-/*UPDATE ASSET*/
+/* UPDATE ASSET */
 
 const updateAsset = async (req, res) => {
 
@@ -118,7 +112,7 @@ const updateAsset = async (req, res) => {
 
     const { id } = req.params;
 
-    /*Validate Update Body*/
+    /* Validate Update Body */
 
     assetSchema.partial().parse(req.body);
 
@@ -148,7 +142,7 @@ const updateAsset = async (req, res) => {
 
 };
 
-/*DELETE ASSET*/
+/* DELETE ASSET */
 
 const deleteAsset = async (req, res) => {
 

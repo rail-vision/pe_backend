@@ -1,17 +1,9 @@
 const express = require("express");
-
-const {
-  uploadModuleData
-} = require("../controllers/upload.controller");
-
-const upload = require("../middleware/upload.middleware");
+const { uploadModuleData } = require("../controllers/upload.controller");
+const { multerUpload } = require("../middleware/upload.middleware"); // ← only this
 
 const router = express.Router();
 
-router.post(
-  "/:module",
-  upload.single("file"),
-  uploadModuleData
-);
+router.post("/:module", multerUpload, uploadModuleData);
 
 module.exports = router;

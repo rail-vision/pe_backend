@@ -1,55 +1,37 @@
 const { z } = require("zod");
 
 const assetSchema = z.object({
-
+  assetId:   z.string().optional(),
   assetCode: z.string(),
-
-  ownerId: z.string(),
-
+  ownerId:   z.string(),
   assetName: z.string(),
+  assetDescription: z.string().optional().default(""),
 
-  assetDescription: z.string(),
-
-  purchaseDate: z.string(),
-
-  assetCurrency: z.string(),
-
+  purchaseDate:  z.coerce.date(),
+  assetCurrency: z.string().optional().default("USD"),
   purchaseValue: z.number(),
+  currentValue:  z.number(),
+  depreciation:  z.number(),
 
-  currentValue: z.number(),
+  assetLife:             z.number().optional().default(0),
+  assetLiquidityLevel:   z.number().optional().default(0),
+  annualAssetUsageLevel: z.number().optional().default(0),
 
-  depreciation: z.number(),
+  assetManufacturer:        z.string().optional().default(""),
+  assetManufacturingCountry:z.string().optional().default(""),
+  assetWarrantyPeriod:      z.number().optional().default(0),
 
-  assetLife: z.number(),
+  assetMaintenanceContract:    z.coerce.boolean().optional().default(false),
+  assetMaintenanceContractor:  z.string().optional(),
+  assetAnnualMaintenanceCost:  z.number().optional(),
 
-  assetLiquidityLevel: z.number(),
+  expectedMeanTimeBetweenFailure: z.number().optional().default(0),
 
-  annualAssetUsageLevel: z.number(),
-
-  assetManufacturer: z.string(),
-
-  assetManufacturingCountry: z.string(),
-
-  assetWarrantyPeriod: z.number(),
-
-  assetMaintenanceContract: z.boolean(),
-
-  assetMaintenanceContractor: z.string().optional(),
-
-  assetAnnualMaintenanceCost: z.number().optional(),
-
-  expectedMeanTimeBetweenFailure: z.number(),
-
-  assetCategory: z.string(),
-
-  assetDimensions: z.string(),
-
-  assetWeight: z.string(),
-
-  assetLocationGPS: z.string(),
-
-  assetLocationAddress: z.string()
-
+  assetCategory:   z.string().optional().default(""),
+  assetDimensions: z.string().optional().default(""),
+  assetWeight:     z.string().optional().default(""),
+  assetLocationGPS:     z.string().optional().default(""),
+  assetLocationAddress: z.string().optional().default(""),
 });
 
 module.exports = assetSchema;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assets>
+  <asset>
+    <assetName>Cisco Router</assetName>
+    <assetCode>CODE-040</assetCode>
+    <ownerId>OWNER-040</ownerId>
+    <assetDescription>Cisco Enterprise Router</assetDescription>
+    <purchaseDate>2022-09-01</purchaseDate>
+    <assetCurrency>USD</assetCurrency>
+    <purchaseValue>95000</purchaseValue>
+    <currentValue>75000</currentValue>
+    <depreciation>20000</depreciation>
+    <assetLife>8</assetLife>
+    <assetLiquidityLevel>2</assetLiquidityLevel>
+    <annualAssetUsageLevel>5</annualAssetUsageLevel>
+    <assetManufacturer>Cisco</assetManufacturer>
+    <assetManufacturingCountry>USA</assetManufacturingCountry>
+    <assetWarrantyPeriod>36</assetWarrantyPeriod>
+    <assetMaintenanceContract>true</assetMaintenanceContract>
+    <assetMaintenanceContractor>CiscoCare</assetMaintenanceContractor>
+    <assetAnnualMaintenanceCost>5000</assetAnnualMaintenanceCost>
+    <expectedMeanTimeBetweenFailure>43800</expectedMeanTimeBetweenFailure>
+    <assetCategory>Networking</assetCategory>
+    <assetDimensions>44x30x4cm</assetDimensions>
+    <assetWeight>3kg</assetWeight>
+    <assetLocationGPS>28.6139 77.2090</assetLocationGPS>
+    <assetLocationAddress>New Delhi India</assetLocationAddress>
+  </asset>
+</assets>

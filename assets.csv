@@ -1,3 +1,4 @@
-assetId,assetCode,ownerId,assetName,assetDescription,purchaseDate,assetCurrency,purchaseValue,currentValue,depreciation,assetLife,assetLiquidityLevel,annualAssetUsageLevel,assetManufacturer,assetManufacturingCountry,assetWarrantyPeriod,assetMaintenanceContract,assetMaintenanceContractor,assetAnnualMaintenanceCost,expectedMeanTimeBetweenFailure,assetCategory,assetDimensions,assetWeight,assetLocationGPS,assetLocationAddress
-AST-1001,GEN-2025-01,OWN-5001,Industrial Generator,Heavy duty generator,2024-01-15,USD,50000,45000,10,15,80,75,Caterpillar,USA,24,true,ABC Maintenance,2500,5000,MECHANICAL,LARGE,HEAVY,"25.276987,55.296249",Dubai Industrial Area
-AST-1002,GEN-2025-02,OWN-5002,Factory Machine,Production machine,2024-02-10,USD,30000,25000,8,10,70,60,Siemens,Germany,12,true,XYZ Services,1800,4000,ELECTRICAL,MEDIUM,MEDIUM,"24.453884,54.377343",Abu Dhabi Industrial Zone
+assetName,assetCode,category,status,purchaseValue,currentValue,depreciation,purchaseDate,ownerId,assetDescription
+MacBook Pro,CODE-001,Electronics,Active,200000,150000,50000,2023-01-15,OWNER-001,Apple MacBook Pro 16 inch laptop
+Office Chair,CODE-002,Furniture,Active,15000,12000,3000,2022-06-10,OWNER-002,Ergonomic office chair with lumbar support
+Dell Monitor,CODE-003,Electronics,Active,35000,30000,5000,2023-03-20,OWNER-003,Dell 27 inch 4K monitor

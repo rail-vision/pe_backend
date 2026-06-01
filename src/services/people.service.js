@@ -1,10 +1,6 @@
 const prisma = require("../lib/prisma");
 
-/*
-|--------------------------------------------------------------------------
-| Get All People
-|--------------------------------------------------------------------------
-*/
+/*Get All People*/
 
 const getAllPeople = async () => {
 
@@ -12,11 +8,7 @@ const getAllPeople = async () => {
 
 };
 
-/*
-|--------------------------------------------------------------------------
-| Get Single Person
-|--------------------------------------------------------------------------
-*/
+/*Get Single Person*/
 
 const getPersonById = async (id) => {
 
@@ -28,19 +20,11 @@ const getPersonById = async (id) => {
 
 };
 
-/*
-|--------------------------------------------------------------------------
-| Create Person
-|--------------------------------------------------------------------------
-*/
+/*Create Person*/
 
 const createPerson = async (data) => {
 
-  /*
-  |--------------------------------------------------------------------------
-  | Duplicate Person ID Check
-  |--------------------------------------------------------------------------
-  */
+  /*Duplicate Person ID Check*/
 
   const existingPersonId = await prisma.people.findUnique({
     where: {
@@ -54,11 +38,7 @@ const createPerson = async (data) => {
 
   }
 
-  /*
-  |--------------------------------------------------------------------------
-  | Duplicate Work Email Check
-  |--------------------------------------------------------------------------
-  */
+  /*Duplicate Work Email Check*/
 
   const existingEmail = await prisma.people.findUnique({
     where: {
@@ -72,11 +52,7 @@ const createPerson = async (data) => {
 
   }
 
-  /*
-  |--------------------------------------------------------------------------
-  | Create Person
-  |--------------------------------------------------------------------------
-  */
+  /*Create Person*/
 
   return await prisma.people.create({
     data
@@ -84,11 +60,7 @@ const createPerson = async (data) => {
 
 };
 
-/*
-|--------------------------------------------------------------------------
-| Update Person
-|--------------------------------------------------------------------------
-*/
+/*Update Person*/
 
 const updatePerson = async (id, data) => {
 
@@ -101,11 +73,7 @@ const updatePerson = async (id, data) => {
 
 };
 
-/*
-|--------------------------------------------------------------------------
-| Delete Person
-|--------------------------------------------------------------------------
-*/
+/*Delete Person*/
 
 const deletePerson = async (id) => {
 

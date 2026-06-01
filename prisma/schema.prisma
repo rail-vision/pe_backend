@@ -126,6 +126,19 @@ model students {
 
   created_at DateTime? @default(now()) @db.Timestamp(6)
 }
+model Template {
+
+  id           String   @id @default(uuid())
+
+  templateName String
+
+  module       String
+
+  fields       Json
+
+  createdAt    DateTime @default(now())
+
+}
 
 enum PersonStatus {
   FULL_TIME
