@@ -12,6 +12,11 @@ const dataRoutes = require('./routes/dataRoutes');
 
 const inventoryRoutes = require('./routes/inventoryRoutes');
 
+const activityRoutes = require('./routes/activityRoutes');
+
+const departmentRoutes = require("./routes/departmentRoutes");
+
+
 const app = express();
 
 app.use(cors());
@@ -34,6 +39,9 @@ app.use('/api/data', dataRoutes);
 
 app.use('/api/inventory', inventoryRoutes);
 
+app.use('/api/activity', activityRoutes);
+
+app.use('/api/department',departmentRoutes);
 
 const PORT = 5000;
 
