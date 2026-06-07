@@ -2,19 +2,21 @@ const express = require('express');
 
 const cors = require('cors');
 
-const incomeRoutes = require('./routes/incomeRoutes');
+const incomeRoutes = require('./routes/income.routes');
 
-const expenseRoutes = require('./routes/expenseRoutes');
+const expenseRoutes = require("./routes/expense.routes");
 
-const supplierRoutes = require('./routes/supplierRoutes');
+const supplierRoutes = require('./routes/supplier.routes');
 
-const dataRoutes = require('./routes/dataRoutes');
+const dataRoutes = require("./routes/data.routes");
 
-const inventoryRoutes = require('./routes/inventoryRoutes');
+const inventoryRoutes = require('./routes/inventory.routes');
 
-const activityRoutes = require('./routes/activityRoutes');
+const activityRoutes = require("./routes/activity.routes");
 
-const departmentRoutes = require("./routes/departmentRoutes");
+const departmentRoutes = require("./routes/department.routes");
+
+const dynamicRoutes =require("./routes/dynamic.routes");
 
 
 const app = express();
@@ -37,11 +39,13 @@ app.use('/api/supplier', supplierRoutes);
 
 app.use('/api/data', dataRoutes);
 
-app.use('/api/inventory', inventoryRoutes);
+app.use("/api/inventory",inventoryRoutes);
 
 app.use('/api/activity', activityRoutes);
 
 app.use('/api/department',departmentRoutes);
+
+app.use("/api/dynamic",dynamicRoutes);
 
 const PORT = 5000;
 
