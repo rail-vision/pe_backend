@@ -1,6 +1,7 @@
 const prisma = require("../config/prisma");
 
 /* CREATE TABLE */
+/*CREATE DYNAMIC TABLE*/
 
 const createTable = async ({
   tableName,
@@ -46,6 +47,21 @@ const insertDynamicData = async (
 
   const values = Object.values(data)
     .map(value => `'${value}'`)
+    message: `Table ${tableName} created successfully`
+  };
+
+};
+
+/*INSERT DYNAMIC DATA*/
+
+const insertDynamicData = async (tableName, data) => {
+
+  const columns = Object.keys(data)
+    .map((key) => `"${key}"`)
+    .join(",");
+
+  const values = Object.values(data)
+    .map((value) => `'${value}'`)
     .join(",");
 
   const query = `
@@ -67,4 +83,6 @@ module.exports = {
   createTable,
   insertDynamicData
 
+  createTable,
+  insertDynamicData
 };
