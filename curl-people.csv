@@ -1,0 +1,2 @@
+employeeCode,personName,personStatus,designation,designationDescription,workStatus,personAddress,country,functionalUnit,startDate,workEmail,personalEmail,workPhone,expertise,workPeriod,driversLicense
+CURL-EMP-001,Curl Test User,FULL_TIME,Developer,Tests the API,ACTIVE,123 Test Street,India,Engineering,2023-01-01,curltest@company.com,curltest@gmail.com,9999999999,curl testing,DAY_ONLY,false

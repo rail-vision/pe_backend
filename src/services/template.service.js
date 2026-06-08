@@ -1,6 +1,6 @@
 const prisma = require("../prisma/client");
 
-const createTemplate = async ({ templateName, fields }) => {
+const createTable = async ({ templateName, fields }) => {
 
   const columns = fields
     .map(field => `"${field.name}" ${field.type}`)
@@ -27,5 +27,5 @@ const createTemplate = async ({ templateName, fields }) => {
 };
 
 module.exports = {
-  createTemplate
+  createTable
 };

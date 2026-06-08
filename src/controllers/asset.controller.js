@@ -1,182 +1,120 @@
-const prisma = require("../prisma/client");
+const prisma = require("../config/prisma"); 
 
 const assetSchema = require("../validations/asset.validation");
 
-/* GET ALL ASSETS */
-
+/*GET ALL ASSETS*/
 const getAllAssets = async (req, res) => {
-
   try {
-
-    const assets = await prisma.asset.findMany();
-
-    res.status(200).json({
-      success: true,
-      data: assets
-    });
-
+    const assets = await prisma.asset.findMany()
+    res.status(200).json({ success: true, data: assets })
   } catch (err) {
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-
+    console.error(err)
+    res.status(500).json({ success: false, message: err.message })
   }
+}
 
-};
+/*GET SINGLE ASSET*/
+const getAsset = async (req, res) => {
+  try {
+    const asset = await prisma.asset.findUnique({
+      where: { id: req.params.id }
+    })
+    if (!asset) {
+      return res.status(404).json({ success: false, message: "Asset not found" })
+    }
+    res.status(200).json({ success: true, data: asset })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false, message: err.message })
+  }
+}
 
-/* CREATE ASSET */
-
+/*CREATE ASSET*/
 const createAsset = async (req, res) => {
-
   try {
 
-    /* Validate Request Body */
+    //Use validated data 
+    const validatedData = assetSchema.parse(req.body)
 
-    assetSchema.parse(req.body);
+    // Auto-generate assetId
+    const assetId = `AST-${Date.now()}-${Math.floor(Math.random() * 1000)}`
 
-    const {
-      purchaseDate,
-      assetCode,
-      ownerId,
-      ...rest
-    } = req.body;
-
-    /* Auto Generate Asset ID */
-
-    const generatedAssetId = `AST-${Date.now()}`;
-
-    /* Duplicate Asset ID Check */
-
+    // Duplicate assetId check 
     const existingAsset = await prisma.asset.findUnique({
-      where: {
-        assetId: generatedAssetId
-      }
-    });
-
+      where: { assetId }
+    })
     if (existingAsset) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Asset ID already exists"
-      });
-
+      return res.status(400).json({ success: false, message: "Asset ID already exists" })
     }
 
-    /* Prepare Data */
-
-    const data = {
-
-      ...rest,
-
-      assetId: generatedAssetId,
-
-      assetCode,
-
-      ownerId,
-
-      purchaseDate: purchaseDate
-        ? new Date(purchaseDate)
-        : null
-
-    };
-
-    /* Create Asset */
-
     const asset = await prisma.asset.create({
-      data
-    });
+      data: {
+        ...validatedData,
+        assetId,
+        // purchaseDate already coerced to Date by Zod
+      }
+    })
 
-    res.status(201).json({
-      success: true,
-      data: asset
-    });
+    res.status(201).json({ success: true, data: asset })
 
   } catch (err) {
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-
+    console.error(err)
+    res.status(400).json({ success: false, message: err.message })
   }
+}
 
-};
-
-/* UPDATE ASSET */
-
+/*UPDATE ASSET*/
 const updateAsset = async (req, res) => {
-
   try {
+    const { id } = req.params
 
-    const { id } = req.params;
+    // Check asset exists first
+    const existing = await prisma.asset.findUnique({ where: { id } })
+    if (!existing) {
+      return res.status(404).json({ success: false, message: "Asset not found" })
+    }
 
-    /* Validate Update Body */
-
-    assetSchema.partial().parse(req.body);
+    // Use validated data 
+    const validatedData = assetSchema.partial().parse(req.body)
 
     const updated = await prisma.asset.update({
+      where: { id },
+      data:  validatedData
+    })
 
-      where: {
-        id
-      },
-
-      data: req.body
-
-    });
-
-    res.status(200).json({
-      success: true,
-      data: updated
-    });
+    res.status(200).json({ success: true, data: updated })
 
   } catch (err) {
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-
+    console.error(err)
+    res.status(400).json({ success: false, message: err.message })
   }
+}
 
-};
-
-/* DELETE ASSET */
-
+/*DELETE ASSET*/
 const deleteAsset = async (req, res) => {
-
   try {
+    const { id } = req.params
 
-    const { id } = req.params;
+    // Check asset exists first
+    const existing = await prisma.asset.findUnique({ where: { id } })
+    if (!existing) {
+      return res.status(404).json({ success: false, message: "Asset not found" })
+    }
 
-    await prisma.asset.delete({
+    await prisma.asset.delete({ where: { id } })
 
-      where: {
-        id
-      }
-
-    });
-
-    res.status(200).json({
-      success: true,
-      message: "Asset deleted successfully"
-    });
+    res.status(200).json({ success: true, message: "Asset deleted successfully" })
 
   } catch (err) {
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-
+    console.error(err)
+    res.status(500).json({ success: false, message: err.message })
   }
-
-};
+}
 
 module.exports = {
   getAllAssets,
+  getAsset,
   createAsset,
   updateAsset,
   deleteAsset
-};
+}

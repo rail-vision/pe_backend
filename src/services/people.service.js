@@ -1,88 +1,59 @@
-const prisma = require("../lib/prisma");
+const prisma = require("../config/prisma");
 
-/*Get All People*/
-
+/*GET ALL PEOPLE*/
 const getAllPeople = async () => {
-
   return await prisma.people.findMany();
-
 };
 
-/*Get Single Person*/
-
+/*GET SINGLE PERSON*/
 const getPersonById = async (id) => {
-
   return await prisma.people.findUnique({
-    where: {
-      id
-    }
+    where: { id },
   });
-
 };
 
-/*Create Person*/
-
+/*CREATE PERSON*/
 const createPerson = async (data) => {
+  // ✅ Auto-generate personId if not provided
+  if (!data.personId) {
+    data.personId = `PER-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  }
 
-  /*Duplicate Person ID Check*/
-
+  // Duplicate personId check
   const existingPersonId = await prisma.people.findUnique({
-    where: {
-      personId: data.personId
-    }
+    where: { personId: data.personId },
   });
-
   if (existingPersonId) {
-
     throw new Error("Person ID already exists");
-
   }
 
-  /*Duplicate Work Email Check*/
-
+  // Duplicate workEmail check
   const existingEmail = await prisma.people.findUnique({
-    where: {
-      workEmail: data.workEmail
-    }
+    where: { workEmail: data.workEmail },
   });
-
   if (existingEmail) {
-
     throw new Error("Work email already exists");
-
   }
 
-  /*Create Person*/
-
-  return await prisma.people.create({
-    data
-  });
-
+  return await prisma.people.create({ data });
 };
 
-/*Update Person*/
-
+/*UPDATE PERSON*/
 const updatePerson = async (id, data) => {
-
-  return await prisma.people.update({
-    where: {
-      id
-    },
-    data
-  });
-
+  const existing = await prisma.people.findUnique({ where: { id } });
+  if (!existing) {
+    throw new Error("Person not found");
+  }
+  return await prisma.people.update({ where: { id }, data });
 };
 
-/*Delete Person*/
-
+/*DELETE PERSON*/
 const deletePerson = async (id) => {
-
-  return await prisma.people.delete({
-    where: {
-      id
-    }
-  });
-
+  const existing = await prisma.people.findUnique({ where: { id } });
+  if (!existing) {
+    throw new Error("Person not found");
+  }
+  return await prisma.people.delete({ where: { id } });
 };
 
 module.exports = {
@@ -90,5 +61,5 @@ module.exports = {
   getPersonById,
   createPerson,
   updatePerson,
-  deletePerson
+  deletePerson,
 };

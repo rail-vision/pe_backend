@@ -18,7 +18,7 @@ const peopleSchema = z.object({
   expertise:              z.string(),
   workPeriod:             z.enum(["DAY_ONLY", "NIGHT_ONLY", "FLEXIBLE"]),
   driversLicense:         z.boolean(),
-  assetId:                z.string().optional(),
+ 
 });
 
 module.exports = peopleSchema;

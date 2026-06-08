@@ -1,158 +1,59 @@
 const peopleService = require("../services/people.service");
-
-const peopleSchema = require("../validations/people.validation");
-
-/*GET ALL PEOPLE*/
+const peopleSchema  = require("../validations/people.validation");
 
 const getPeople = async (req, res) => {
-
   try {
-
-    const people = await peopleService.getAllPeople();
-
-    res.status(200).json({
-      success: true,
-      data: people
-    });
-
+    const people = await peopleService.getAllPeople()
+    res.status(200).json({ success: true, data: people })
   } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch people"
-    });
-
+    console.error(error)
+    res.status(500).json({ success: false, message: "Failed to fetch people" })
   }
-
-};
-
-/*GET SINGLE PERSON*/
+}
 
 const getPerson = async (req, res) => {
-
   try {
-
-    const person = await peopleService.getPersonById(
-      req.params.id
-    );
-
-    res.status(200).json({
-      success: true,
-      data: person
-    });
-
+    const person = await peopleService.getPersonById(req.params.id)
+    if (!person) {
+      return res.status(404).json({ success: false, message: "Person not found" })
+    }
+    res.status(200).json({ success: true, data: person })
   } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch person"
-    });
-
+    console.error(error)
+    res.status(500).json({ success: false, message: "Failed to fetch person" })
   }
-
-};
-
-/*CREATE PERSON*/
+}
 
 const createPerson = async (req, res) => {
-
   try {
-
-    /*Validate Request Body*/
-
-    peopleSchema.parse(req.body);
-
-    const person = await peopleService.createPerson(
-      req.body
-    );
-
-    res.status(201).json({
-      success: true,
-      data: person
-    });
-
+    const validatedData = peopleSchema.parse(req.body)  // ✅ use validated data
+    const person = await peopleService.createPerson(validatedData)
+    res.status(201).json({ success: true, data: person })
   } catch (error) {
-
-    console.log(error);
-
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
-
+    console.error(error)
+    res.status(400).json({ success: false, message: error.message })
   }
-
-};
-
-/*UPDATE PERSON*/
+}
 
 const updatePerson = async (req, res) => {
-
   try {
-
-    /*Partial Validation For Update*/
-
-    peopleSchema.partial().parse(req.body);
-
-    const person = await peopleService.updatePerson(
-      req.params.id,
-      req.body
-    );
-
-    res.status(200).json({
-      success: true,
-      data: person
-    });
-
+    const validatedData = peopleSchema.partial().parse(req.body)  // ✅ use validated data
+    const person = await peopleService.updatePerson(req.params.id, validatedData)
+    res.status(200).json({ success: true, data: person })
   } catch (error) {
-
-    console.log(error);
-
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
-
+    console.error(error)
+    res.status(400).json({ success: false, message: error.message })
   }
-
-};
-
-/* DELETE */
+}
 
 const deletePerson = async (req, res) => {
-
   try {
-
-    await peopleService.deletePerson(
-      req.params.id
-    );
-
-    res.status(200).json({
-      success: true,
-      message: "Person deleted successfully"
-    });
-
+    await peopleService.deletePerson(req.params.id)
+    res.status(200).json({ success: true, message: "Person deleted successfully" })
   } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to delete person"
-    });
-
+    console.error(error)
+    res.status(500).json({ success: false, message: "Failed to delete person" })
   }
+}
 
-};
-
-module.exports = {
-  getPeople,
-  getPerson,
-  createPerson,
-  updatePerson,
-  deletePerson
-};
+module.exports = { getPeople, getPerson, createPerson, updatePerson, deletePerson }
