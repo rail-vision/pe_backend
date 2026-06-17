@@ -105,15 +105,7 @@ const getDashboardStats = async () => {
 
   ])
 
-  /*
-  |--------------------------------------------------------------------
-  | RESPONSE SHAPE
-  | Matches dashboard wireframe sections:
-  | 1. Data Statistics
-  | 2. System Use Statistics
-  | 3. Auto AI Statistics (placeholder — tables not built yet)
-  |--------------------------------------------------------------------
-  */
+  /*RESPONSE SHAPE*/
 
   return {
 
