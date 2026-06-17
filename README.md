@@ -87,3 +87,25 @@ git push
 
 ---
 
+backend:
+
+✅ Express
+✅ PostgreSQL
+✅ Prisma
+✅ Asset CRUD
+✅ People CRUD
+✅ Authentication
+✅ JWT
+✅ bcrypt password hashing
+✅ File Upload (CSV/XLSX/XML/JSON)
+✅ Dynamic Templates
+✅ Dynamic Table Creation
+✅ Neon/PostgreSQL deployment
+
+Frontend:
+
+✅ Login page created
+🔄 Connect login page to /api/auth/login
+🔄 Store JWT in localStorage/sessionStorage
+🔄 Protected routes
+🔄 Dashboard integration
