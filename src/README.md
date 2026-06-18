@@ -139,12 +139,3 @@ dynamic templates
 field selection
 dynamic table generation
 configurable enterprise workflows
-13. Dynamic Field Mapping Planning
-
-Started designing:
-
-field transformation layer
-upload validation workflow
-schema mapping system
-
-to support flexible frontend data formats.
