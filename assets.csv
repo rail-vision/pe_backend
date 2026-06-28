@@ -1,4 +1,0 @@
-assetName,assetCode,category,status,purchaseValue,currentValue,depreciation,purchaseDate,ownerId,assetDescription
-MacBook Pro,CODE-001,Electronics,Active,200000,150000,50000,2023-01-15,OWNER-001,Apple MacBook Pro 16 inch laptop
-Office Chair,CODE-002,Furniture,Active,15000,12000,3000,2022-06-10,OWNER-002,Ergonomic office chair with lumbar support
-Dell Monitor,CODE-003,Electronics,Active,35000,30000,5000,2023-03-20,OWNER-003,Dell 27 inch 4K monitor
