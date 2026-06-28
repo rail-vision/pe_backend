@@ -8,6 +8,13 @@ const uploadRoutes   = require("./routes/upload.routes");
 const dynamicRoutes  = require("./routes/dynamic.routes");
 const templateRoutes = require("./routes/template.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
+const correlationRoutes = require("./routes/correlation.routes");
+const financeCorrelationRoutes =require("./routes/financeCorrelation.routes");
+const outlierRoutes =require("./routes/outlier.routes");
+const infographicRoutes =require("./routes/infographic.routes");
+const heatmapRoutes =require("./routes/heatmap.routes");
+
+
 
 const app = express();
 
@@ -26,6 +33,24 @@ app.use("/api/upload",    uploadRoutes);
 app.use("/api/dynamic",   dynamicRoutes);
 app.use("/api/templates", templateRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/correlation", correlationRoutes);
+app.use("/api/correlation/finance",financeCorrelationRoutes);
+app.use("/api/outlier",outlierRoutes);
+app.use("/api/infographics",infographicRoutes);
+app.use("/api/heatmap",heatmapRoutes);
+app.use(
+  "/api/distribution",
+  require(
+    "./routes/distribution.routes"
+  )
+);
+
+app.use(
+  "/api/presentation",
+  require(
+    "./routes/presentation.routes"
+  )
+);
 
 /*DEFAULT ROUTE*/
 

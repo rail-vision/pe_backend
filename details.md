@@ -66,3 +66,99 @@ GET: http://localhost:5000/api/people
 POST: http://localhost:5000/api/people
 PUT: http://localhost:5000/api/people/<id>
 DELETE: http://localhost:5000/api/people/<id>
+
+
+Build the frontend heatmap.
+
+Install:
+
+npm install react-plotly.js plotly.js
+
+component:
+
+import Plot from "react-plotly.js";
+
+export default function CorrelationHeatmap({ data }) {
+
+  return (
+    <Plot
+      data={[
+        {
+          z: data.matrix,
+          x: data.labels,
+          y: data.labels,
+          type: "heatmap"
+        }
+      ]}
+      layout={{
+        title: "Correlation Matrix"
+      }}
+    />
+  );
+
+}
+After Heatmap
+
+Then implement the wireframe flow:
+
+Choose Department
+        ↓
+Choose Data Type
+        ↓
+Choose Variables
+        ↓
+Run Correlation
+        ↓
+Heatmap
+        ↓
+Insights Panel
+
+Example insights generated automatically:
+
+Strongest correlation:
+purchaseValue ↔ currentValue (0.9962)
+
+Weakest correlation:
+currentValue ↔ depreciation (0.8556)
+
+Overall:
+Assets with higher purchase values retain higher current values and show proportionally larger depreciation.
+
+At this point, your backend correlation engine is essentially complete for the Asset module. The next major task is connecting it to the frontend visualization.
+Phase 1 — Foundation (do first)
+├── Task 1: Auth Integration     ← connect login/signup to backend
+└── Task 2: Dashboard Home       ← stats cards, user info from JWT
+
+Phase 2 — Data (do second)
+├── Task 3: CORRELATE            ← simplest AI feature, just math
+└── Task 4: OUTLIERS             ← table + bell curve display
+
+Phase 3 — AI Features (do third)
+├── Task 5: PREDICT              ← ML prediction
+└── Task 6: CLUSTER              ← clustering
+
+Phase 4 — Output (do last)
+├── Task 7: INFOGRAPHICS         ← chart builder
+├── Task 8: PRESENTATIONS        ← slide maker
+└── Task 9: AUTO AI              ← alarms & auto reporting
+
+Frontend Heatmap (Correlation Matrix)
+Frontend Bell Curve / Outlier Visualization
+PDF Export
+PPT Export
+
+
+token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyZjJkNGYzLWY2N2EtNGNlYS1hMzhlLWMwNTQxZDFiNzRiZCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJkZXBhcnRtZW50IjoiSVQiLCJpYXQiOjE3ODI1Mjc3MzQsImV4cCI6MTc4MzEzMjUzNH0.WyVTPbd38Sz3haqOSv-C0ENTxdICy64B3zARZIgl_Ys
+
+Remaining Improvements for Production
+
+Before deploying, you can add these enhancements:
+
+Logging (e.g., Winston or Pino)
+API rate limiting
+Request validation on every endpoint
+Swagger/OpenAPI documentation
+Unit and integration tests
+Docker support
+CI/CD pipeline
+Cloud deployment (AWS, Azure, GCP, etc.)

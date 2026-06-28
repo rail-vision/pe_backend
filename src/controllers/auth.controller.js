@@ -43,13 +43,13 @@ const register = async (req, res) => {
     console.error("[register]", err.message)
 
     // Zod validation error
-    if (err.name === "ZodError") {
-      return res.status(400).json({
-        success: false,
-        message: err.errors[0]?.message || "Validation failed",
-        errors:  err.errors
-      })
-    }
+  if (err.name === "ZodError") {
+  return res.status(400).json({
+    success: false,
+    message: err.issues[0]?.message || "Validation failed",
+    errors: err.issues
+  });
+}
 
     res.status(err.status || 500).json({
       success: false,
