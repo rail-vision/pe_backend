@@ -2,7 +2,7 @@ const heatmapService =
 require("../services/heatmap.service");
 
 const generateHeatmap =
-async (req,res) => {
+async (req, res, next) => {
 
   try {
 
@@ -12,23 +12,23 @@ async (req,res) => {
       );
 
     return res.status(200).json({
-      success:true,
-      data:result
+
+      success: true,
+
+      data: result
+
     });
 
-  }
+  } catch (error) {
 
-  catch(error){
-
-    return res.status(500).json({
-      success:false,
-      error:error.message
-    });
+    next(error);
 
   }
 
 };
 
 module.exports = {
+
   generateHeatmap
+
 };

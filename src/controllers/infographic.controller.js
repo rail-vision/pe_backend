@@ -2,7 +2,7 @@ const infographicService =
 require("../services/infographic.service");
 
 const generateChart =
-async (req, res) => {
+async (req, res, next) => {
 
   try {
 
@@ -21,13 +21,7 @@ async (req, res) => {
 
   } catch (error) {
 
-    return res.status(500).json({
-
-      success: false,
-
-      error: error.message
-
-    });
+    next(error);
 
   }
 

@@ -1,10 +1,8 @@
 const distributionService =
-require(
-  "../services/distribution.service"
-);
+require("../services/distribution.service");
 
 const generateDistribution =
-async (req,res) => {
+async (req, res, next) => {
 
   try {
 
@@ -15,23 +13,15 @@ async (req,res) => {
 
     return res.status(200).json({
 
-      success:true,
+      success: true,
 
-      data:result
-
-    });
-
-  }
-
-  catch(error){
-
-    return res.status(500).json({
-
-      success:false,
-
-      error:error.message
+      data: result
 
     });
+
+  } catch (error) {
+
+    next(error);
 
   }
 

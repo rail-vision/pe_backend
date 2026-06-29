@@ -1,109 +1,95 @@
-const outlierService =
-require("../services/outlier.service");
+const outlierService = require("../services/outlier.service");
 
-const runAssetOutlier =
-async (req, res) => {
-
+/*ASSET OUTLIER|POST /api/outlier/assets/run*/
+const runAssetOutlier = async (req, res) => {
   try {
+    const { variable, sigma } = req.body
 
-    const result =
-      await outlierService.runAssetOutlier(
-        req.body
-      );
+    if (!variable) {
+      return res.status(400).json({
+        success: false,
+        message: "variable is required"
+      })
+    }
 
-    return res.status(200).json({
-      success: true,
-      data: result
-    });
+    const result = await outlierService.runAssetOutlier({
+      variable,
+      sigma: sigma ?? 3
+    })
 
-  } catch (error) {
+    return res.status(200).json({ success: true, data: result })
 
-    return res.status(500).json({
+  } catch (err) {
+    console.error("[runAssetOutlier]", err.message)
+    return res.status(err.status || 500).json({
       success: false,
-      error: error.message
-    });
-
+      message: err.message
+    })
   }
+}
 
-};
-const runPeopleOutlier =
-async (req, res) => {
-
+/*PEOPLE OUTLIER|POST /api/outlier/people/run*/
+const runPeopleOutlier = async (req, res) => {
   try {
+    const { variable, sigma } = req.body
 
-    const result =
-      await outlierService.runPeopleOutlier(
-        req.body
-      );
+    if (!variable) {
+      return res.status(400).json({
+        success: false,
+        message: "variable is required"
+      })
+    }
 
-    return res.status(200).json({
-      success: true,
-      data: result
-    });
+    const result = await outlierService.runPeopleOutlier({
+      variable,
+      sigma: sigma ?? 3
+    })
 
-  } catch (error) {
+    return res.status(200).json({ success: true, data: result })
 
-    return res.status(500).json({
+  } catch (err) {
+    console.error("[runPeopleOutlier]", err.message)
+    return res.status(err.status || 500).json({
       success: false,
-      error: error.message
-    });
-
+      message: err.message
+    })
   }
+}
 
-};
-const runUploadOutlier =
-async (req, res) => {
-
+/*UPLOAD OUTLIER|POST /api/outlier/upload/run*/
+const runUploadOutlier = async (req, res) => {
   try {
+    const { variable, sigma, rows } = req.body
 
-    const result =
-      await outlierService.runUploadOutlier(
-        req.body
-      );
+    if (!variable) {
+      return res.status(400).json({
+        success: false,
+        message: "variable is required"
+      })
+    }
 
-    return res.status(200).json({
-      success: true,
-      data: result
-    });
+    if (!rows) {
+      return res.status(400).json({
+        success: false,
+        message: "rows is required"
+      })
+    }
 
-  } catch (error) {
+    const result = outlierService.runUploadOutlier({
+      variable,
+      sigma: sigma ?? 3,
+      rows
+    })
 
-    return res.status(500).json({
+    return res.status(200).json({ success: true, data: result })
+
+  } catch (err) {
+    console.error("[runUploadOutlier]", err.message)
+    return res.status(err.status || 500).json({
       success: false,
-      error: error.message
-    });
-
+      message: err.message
+    })
   }
+}
 
-};
-const runFinanceOutlier =
-async (req, res) => {
-
-  try {
-
-    const result =
-      await outlierService.runFinanceOutlier(
-        req.body
-      );
-
-    return res.status(200).json({
-      success: true,
-      data: result
-    });
-
-  } catch (error) {
-
-    return res.status(500).json({
-      success: false,
-      error: error.message
-    });
-
-  }
-
-};
-module.exports = {
-  runAssetOutlier,
-  runPeopleOutlier,
-  runUploadOutlier,
-  runFinanceOutlier
-};
+module.exports = { runAssetOutlier, runPeopleOutlier, runUploadOutlier }

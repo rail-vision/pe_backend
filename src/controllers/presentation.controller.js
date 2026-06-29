@@ -2,7 +2,7 @@ const pptService =
 require("../services/ppt.service");
 
 const generatePPT =
-async (req,res) => {
+async (req, res, next) => {
 
   try {
 
@@ -11,28 +11,22 @@ async (req,res) => {
 
     return res.status(200).json({
 
-      success:true,
+      success: true,
 
-      file:filePath
-
-    });
-
-  }
-
-  catch(error){
-
-    return res.status(500).json({
-
-      success:false,
-
-      error:error.message
+      file: filePath
 
     });
+
+  } catch (error) {
+
+    next(error);
 
   }
 
 };
 
 module.exports = {
+
   generatePPT
+
 };
