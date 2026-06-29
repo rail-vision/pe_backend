@@ -1,12 +1,6 @@
 const dashboardService = require("../services/dashboard.service");
 
-/*
-|--------------------------------------------------------------------------
-| GET DASHBOARD STATS
-| GET /api/dashboard/stats
-| Protected Route
-|--------------------------------------------------------------------------
-*/
+/*DASHBOARD STATS*/
 
 const getDashboardStats = async (req, res, next) => {
 

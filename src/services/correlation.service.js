@@ -1,11 +1,7 @@
 const prisma  = require("../config/prisma"); // ✅ fixed import path
 const pearson = require("../utils/pearson");
 
-/*
-|--------------------------------------------------------------------------
-| CORE CORRELATION CALCULATOR
-|--------------------------------------------------------------------------
-*/
+/*CORE CORRELATION CALCULATOR*/
 const calculateCorrelation = (data, variables) => {
   const matrix = []
 
@@ -21,12 +17,7 @@ const calculateCorrelation = (data, variables) => {
   return { labels: variables, matrix }
 }
 
-/*
-|--------------------------------------------------------------------------
-| ALLOWED FIELDS WHITELIST
-| Prevents arbitrary DB field injection
-|--------------------------------------------------------------------------
-*/
+/*ALLOWED FIELDS WHITELIST|Prevents arbitrary DB field injection*/
 const ASSET_NUMERIC_FIELDS = [
   "purchaseValue", "currentValue", "depreciation",
   "assetLife", "assetLiquidityLevel", "annualAssetUsageLevel",
@@ -60,11 +51,7 @@ const validateVariables = (variables, allowedFields, label) => {
   }
 }
 
-/*
-|--------------------------------------------------------------------------
-| ASSET CORRELATION
-|--------------------------------------------------------------------------
-*/
+/*ASSET CORRELATION*/
 const run = async ({ variables }) => {
   validateVariables(variables, ASSET_NUMERIC_FIELDS, "asset")
 
@@ -89,11 +76,7 @@ const run = async ({ variables }) => {
   }
 }
 
-/*
-|--------------------------------------------------------------------------
-| PEOPLE CORRELATION
-|--------------------------------------------------------------------------
-*/
+/*PEOPLE CORRELATION*/
 const runPeople = async ({ variables }) => {
   validateVariables(variables, PEOPLE_NUMERIC_FIELDS, "people")
 
@@ -118,11 +101,7 @@ const runPeople = async ({ variables }) => {
   }
 }
 
-/*
-|--------------------------------------------------------------------------
-| UPLOAD CORRELATION (custom rows sent from frontend)
-|--------------------------------------------------------------------------
-*/
+/*UPLOAD CORRELATION*/
 const runUpload = ({ variables, rows }) => {
   if (!Array.isArray(variables) || variables.length < 2) {
     throw Object.assign(

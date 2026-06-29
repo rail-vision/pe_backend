@@ -4,7 +4,7 @@ const router  = express.Router();
 const { getDashboardStats }  = require("../controllers/dashboard.controller");
 const { protect }            = require("../middleware/auth.middleware");
 
-/*DASHBOARD ROUTES/All protected — user must be logged in*/
+/*DASHBOARD ROUTES*/
 router.get("/stats", protect, getDashboardStats);   
 
 module.exports = router;

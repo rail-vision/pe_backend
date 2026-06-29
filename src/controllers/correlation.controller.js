@@ -1,11 +1,6 @@
 const correlationService = require("../services/correlation.service");
 
-/*
-|--------------------------------------------------------------------------
-| ASSET CORRELATION
-| POST /api/correlation/run
-|--------------------------------------------------------------------------
-*/
+/*ASSET CORRELATION*/
 const runCorrelation = async (req, res) => {
   try {
     const { variables } = req.body
@@ -28,17 +23,12 @@ const runCorrelation = async (req, res) => {
     console.error("[runCorrelation]", err.message)
     return res.status(err.status || 500).json({
       success: false,
-      message: err.message  // ✅ consistent "message" key
+      message: err.message  
     })
   }
 }
 
-/*
-|--------------------------------------------------------------------------
-| PEOPLE CORRELATION
-| POST /api/correlation/people/run
-|--------------------------------------------------------------------------
-*/
+/*PEOPLE CORRELATION*/
 const runPeopleCorrelation = async (req, res) => {
   try {
     const { variables } = req.body
@@ -66,12 +56,7 @@ const runPeopleCorrelation = async (req, res) => {
   }
 }
 
-/*
-|--------------------------------------------------------------------------
-| UPLOAD CORRELATION
-| POST /api/correlation/upload/run
-|--------------------------------------------------------------------------
-*/
+/*UPLOAD CORRELATION*/
 const runUploadCorrelation = async (req, res) => {
   try {
     const { variables, rows } = req.body

@@ -1,11 +1,6 @@
 const pptService = require("../services/ppt.service");
 
-/*
-|--------------------------------------------------------------------------
-| GENERATE PPT
-| POST /api/presentation/ppt
-|--------------------------------------------------------------------------
-*/
+/*GENERATE PPT*/
 const generatePPT = async (req, res) => {
   try {
     const {

@@ -2,11 +2,7 @@ const pptxgen = require("pptxgenjs");
 const path    = require("path");
 const fs      = require("fs");
 
-/*
-|--------------------------------------------------------------------------
-| ENSURE REPORTS DIRECTORY EXISTS
-|--------------------------------------------------------------------------
-*/
+/*ENSURE REPORTS DIRECTORY EXISTS*/
 const ensureReportsDir = () => {
   const dir = path.join(process.cwd(), "reports")
   if (!fs.existsSync(dir)) {
@@ -15,11 +11,7 @@ const ensureReportsDir = () => {
   return dir
 }
 
-/*
-|--------------------------------------------------------------------------
-| GENERATE PPT
-|--------------------------------------------------------------------------
-*/
+/*GENERATE PPT*/
 const generatePPT = async ({
   title       = "Pearl Analytics Report",
   author      = "Pearl",
@@ -33,7 +25,7 @@ const generatePPT = async ({
   ppt.subject   = "Analytics Report"
   ppt.title     = title
 
-  // ── Default slides if none provided ─────────────────────────────────
+  // ── Default slides 
   if (slides.length === 0) {
     slides = [
       {
@@ -50,7 +42,7 @@ const generatePPT = async ({
     ]
   }
 
-  // ── Build slides ─────────────────────────────────────────────────────
+  // Build slides 
   slides.forEach((slideData, index) => {
     const slide = ppt.addSlide()
 
@@ -106,7 +98,7 @@ const generatePPT = async ({
     }
   })
 
-  // ── Save file ────────────────────────────────────────────────────────
+  //Save file 
   const reportsDir = ensureReportsDir()
   const fileName   = `report-${Date.now()}.pptx`
   const filePath   = path.join(reportsDir, fileName)
