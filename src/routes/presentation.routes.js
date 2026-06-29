@@ -1,20 +1,14 @@
-const express =
-require("express");
+const express = require("express");
+const router  = express.Router();
 
-const {
-  generatePPT
-} =
-require(
- "../controllers/presentation.controller"
-);
+const { generatePPT } = require("../controllers/presentation.controller");
+const { protect }     = require("../middleware/auth.middleware");
 
-const router =
-express.Router();
+/*
+|--------------------------------------------------------------------------
+| PRESENTATION ROUTES — all protected
+|--------------------------------------------------------------------------
+*/
+router.post("/ppt", protect, generatePPT); // POST /api/presentation/ppt
 
-router.post(
- "/ppt",
- generatePPT
-);
-
-module.exports =
-router;
+module.exports = router;

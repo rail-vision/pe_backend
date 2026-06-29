@@ -1,217 +1,176 @@
-const prisma =
-require("../prisma/client");
+const prisma = require("../config/prisma"); // ✅ fixed import path
 
-const generate =
-async ({
-  module,
-  chartType,
-  xAxis,
-  yAxis
-}) => {
+/*
+|--------------------------------------------------------------------------
+| ALLOWED MODULES + FIELDS
+|--------------------------------------------------------------------------
+*/
+const ALLOWED_MODULES = ["asset", "people"]
 
-  let data = [];
+const MODULE_CONFIG = {
+  asset: {
+    model:       () => prisma.asset,
+    labelFields: ["assetName", "assetCode", "assetCategory", "assetManufacturer"],
+    valueFields: [
+      "purchaseValue", "currentValue", "depreciation",
+      "assetLife", "assetLiquidityLevel", "annualAssetUsageLevel",
+      "assetWarrantyPeriod", "assetAnnualMaintenanceCost",
+      "expectedMeanTimeBetweenFailure"
+    ]
+  },
+  people: {
+    model:       () => prisma.people,
+    labelFields: ["personName", "designation", "functionalUnit", "country"],
+    valueFields: [
+      "salary", "experienceYears", "age",
+      "attendancePercent", "performanceScore",
+      "trainingHours", "bonus"
+    ]
+  }
+}
 
-  /*
-  ==========================
-  PEOPLE
-  ==========================
-  */
+const ALLOWED_CHART_TYPES = ["bar", "line", "pie", "scatter", "heatmap"]
 
-  if (
-    module === "people"
-  ) {
-
-    data =
-      await prisma.people.findMany();
-
+/*
+|--------------------------------------------------------------------------
+| VALIDATE INPUT
+|--------------------------------------------------------------------------
+*/
+const validateInput = ({ module, chartType, xAxis, yAxis }) => {
+  if (!module) {
+    throw Object.assign(new Error("module is required"), { status: 400 })
+  }
+  if (!ALLOWED_MODULES.includes(module)) {
+    throw Object.assign(
+      new Error(`Invalid module: "${module}". Allowed: ${ALLOWED_MODULES.join(", ")}`),
+      { status: 400 }
+    )
+  }
+  if (!chartType) {
+    throw Object.assign(new Error("chartType is required"), { status: 400 })
+  }
+  if (!ALLOWED_CHART_TYPES.includes(chartType)) {
+    throw Object.assign(
+      new Error(`Invalid chartType: "${chartType}". Allowed: ${ALLOWED_CHART_TYPES.join(", ")}`),
+      { status: 400 }
+    )
+  }
+  if (!xAxis) {
+    throw Object.assign(new Error("xAxis is required"), { status: 400 })
+  }
+  if (!yAxis) {
+    throw Object.assign(new Error("yAxis is required"), { status: 400 })
   }
 
-  /*
-  ==========================
-  ASSET
-  ==========================
-  */
+  const config = MODULE_CONFIG[module]
 
-  else if (
-    module === "asset"
-  ) {
+  if (!config.labelFields.includes(xAxis)) {
+    throw Object.assign(
+      new Error(`Invalid xAxis: "${xAxis}" for module "${module}". Allowed: ${config.labelFields.join(", ")}`),
+      { status: 400 }
+    )
+  }
+  if (!config.valueFields.includes(yAxis)) {
+    throw Object.assign(
+      new Error(`Invalid yAxis: "${yAxis}" for module "${module}". Allowed: ${config.valueFields.join(", ")}`),
+      { status: 400 }
+    )
+  }
+}
 
-    data =
-      await prisma.asset.findMany();
+/*
+|--------------------------------------------------------------------------
+| GENERATE CHART DATA
+|--------------------------------------------------------------------------
+*/
+const generate = async ({ module, chartType, xAxis, yAxis, limit = 100 }) => {
 
+  validateInput({ module, chartType, xAxis, yAxis })
+
+  const config = MODULE_CONFIG[module]
+  const model  = config.model()
+
+  // Fetch only needed fields
+  const data = await model.findMany({
+    select: {
+      [xAxis]: true,
+      [yAxis]: true
+    },
+    take: Math.min(limit, 1000) // max 1000 rows
+  })
+
+  if (data.length === 0) {
+    throw Object.assign(
+      new Error(`No data found for module "${module}"`),
+      { status: 404 }
+    )
   }
 
-  /*
-  ==========================
-  FINANCE INCOME
-  ==========================
-  */
+  // Filter out rows with null/undefined values
+  const clean = data.filter(
+    row => row[xAxis] !== null && row[xAxis] !== undefined &&
+           row[yAxis] !== null && row[yAxis] !== undefined &&
+           !isNaN(Number(row[yAxis]))
+  )
 
-  else if (
-    module === "finance-income"
-  ) {
-
-    data =
-      await prisma.income.findMany();
-
+  if (clean.length === 0) {
+    throw Object.assign(
+      new Error(`No valid numeric data found for yAxis: "${yAxis}"`),
+      { status: 400 }
+    )
   }
 
-  /*
-  ==========================
-  FINANCE EXPENSE
-  ==========================
-  */
+  const labels = clean.map(row => String(row[xAxis]))
+  const values = clean.map(row => Number(row[yAxis]))
 
-  else if (
-    module === "finance-expense"
-  ) {
+  // Summary statistics
+  const sum  = values.reduce((a, b) => a + b, 0)
+  const avg  = sum / values.length
+  const max  = Math.max(...values)
+  const min  = Math.min(...values)
 
-    data =
-      await prisma.expense.findMany();
-
+  const baseResponse = {
+    module,
+    chartType,
+    xAxis,
+    yAxis,
+    totalRows: clean.length,
+    stats: {
+      sum:   Number(sum.toFixed(2)),
+      avg:   Number(avg.toFixed(2)),
+      max,
+      min
+    }
   }
 
-  else {
-
-    throw new Error(
-      "Invalid module"
-    );
-
-  }
-
-  const labels =
-    data.map(
-      row => row[xAxis]
-    );
-
-  const values =
-    data.map(
-      row =>
-        Number(
-          row[yAxis]
-        )
-    );
-
-  /*
-  ==========================
-  BAR
-  ==========================
-  */
-
-  if (
-    chartType === "bar"
-  ) {
-
+  // Scatter returns points array
+  if (chartType === "scatter") {
     return {
+      ...baseResponse,
+      dataset: clean.map(row => ({
+        x: String(row[xAxis]),
+        y: Number(row[yAxis])
+      }))
+    }
+  }
 
-      chartType,
-
+  // Heatmap returns matrix-like structure
+  if (chartType === "heatmap") {
+    return {
+      ...baseResponse,
       dataset: {
-
         labels,
-
-        values
-
+        values,
+        matrix: values.map((v, i) => ({ label: labels[i], value: v }))
       }
-
-    };
-
+    }
   }
 
-  /*
-  ==========================
-  LINE
-  ==========================
-  */
-
-  if (
-    chartType === "line"
-  ) {
-
-    return {
-
-      chartType,
-
-      dataset: {
-
-        labels,
-
-        values
-
-      }
-
-    };
-
+  // Bar, Line, Pie all return labels + values
+  return {
+    ...baseResponse,
+    dataset: { labels, values }
   }
+}
 
-  /*
-  ==========================
-  PIE
-  ==========================
-  */
-
-  if (
-    chartType === "pie"
-  ) {
-
-    return {
-
-      chartType,
-
-      dataset: {
-
-        labels,
-
-        values
-
-      }
-
-    };
-
-  }
-
-  /*
-  ==========================
-  SCATTER
-  ==========================
-  */
-
-  if (
-    chartType === "scatter"
-  ) {
-
-    const points =
-      labels.map(
-        (
-          label,
-          index
-        ) => ({
-
-          x: label,
-
-          y: values[index]
-
-        })
-      );
-
-    return {
-
-      chartType,
-
-      dataset: points
-
-    };
-
-  }
-
-  throw new Error(
-    "Unsupported chart type"
-  );
-
-};
-
-module.exports = {
-
-  generate
-
-};
+module.exports = { generate, ALLOWED_MODULES, ALLOWED_CHART_TYPES, MODULE_CONFIG }

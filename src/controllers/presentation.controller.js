@@ -1,32 +1,39 @@
-const pptService =
-require("../services/ppt.service");
+const pptService = require("../services/ppt.service");
 
-const generatePPT =
-async (req, res, next) => {
-
+/*
+|--------------------------------------------------------------------------
+| GENERATE PPT
+| POST /api/presentation/ppt
+|--------------------------------------------------------------------------
+*/
+const generatePPT = async (req, res) => {
   try {
+    const {
+      title,
+      author,
+      slides,
+      includeDate
+    } = req.body
 
-    const filePath =
-      await pptService.generatePPT();
+    const result = await pptService.generatePPT({
+      title:       title       || "Pearl Analytics Report",
+      author:      author      || "Pearl",
+      slides:      slides      || [],
+      includeDate: includeDate !== false
+    })
 
     return res.status(200).json({
-
       success: true,
+      data:    result
+    })
 
-      file: filePath
-
-    });
-
-  } catch (error) {
-
-    next(error);
-
+  } catch (err) {
+    console.error("[generatePPT]", err.message)
+    return res.status(err.status || 500).json({
+      success: false,
+      message: err.message
+    })
   }
+}
 
-};
-
-module.exports = {
-
-  generatePPT
-
-};
+module.exports = { generatePPT }
