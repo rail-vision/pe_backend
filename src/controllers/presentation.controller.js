@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const presentationService = require("../services/presentation.service");
 console.log("Presentation Controller Loaded");
 /*
@@ -154,3 +155,39 @@ module.exports = {
     deletePresentation
 
 };
+=======
+const pptService = require("../services/ppt.service");
+
+/*GENERATE PPT*/
+const generatePPT = async (req, res) => {
+  try {
+    const {
+      title,
+      author,
+      slides,
+      includeDate
+    } = req.body
+
+    const result = await pptService.generatePPT({
+      title:       title       || "Pearl Analytics Report",
+      author:      author      || "Pearl",
+      slides:      slides      || [],
+      includeDate: includeDate !== false
+    })
+
+    return res.status(200).json({
+      success: true,
+      data:    result
+    })
+
+  } catch (err) {
+    console.error("[generatePPT]", err.message)
+    return res.status(err.status || 500).json({
+      success: false,
+      message: err.message
+    })
+  }
+}
+
+module.exports = { generatePPT }
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3

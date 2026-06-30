@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 1. PostgreSQL Database Setup
 •	Installed PostgreSQL and pgAdmin.
 •	Created the main database: enterprise_management_system.
@@ -151,3 +152,116 @@ upload validation workflow
 schema mapping system
 
 to support flexible frontend data formats.
+=======
+# Pearl Backend Server
+
+Backend server for the Pearl Project built with Node.js, Express, and Prisma.
+
+## 🚀 Getting Started
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## ▶️ Run Backend Server
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The backend server will start in development mode.
+
+---
+
+## 🗄️ Prisma Studio
+
+Open Prisma Studio to manage and view database records:
+
+```bash
+npx prisma studio
+```
+
+Prisma Studio will open in your browser.
+
+---
+
+## 📦 Tech Stack
+
+- Node.js
+- Express.js
+- Prisma ORM (operation relation model)
+- PostgreSQL (based on your setup)
+
+---
+
+## 📁 Project Structure
+
+```bash
+backend/
+│
+├── prisma/
+├── src/
+├── package.json
+├── prisma.config.ts
+└── README.md
+```
+
+---
+
+## 🔧 Prisma Commands
+
+Generate Prisma Client:
+
+```bash
+npx prisma generate
+```
+
+Run migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+---
+
+## 📌 Git Commands
+
+Push latest changes:
+
+```bash
+git add .
+git commit -m "update backend"
+git push
+```
+
+---
+
+backend:
+
+✅ Express
+✅ PostgreSQL
+✅ Prisma
+✅ Asset CRUD
+✅ People CRUD
+✅ Authentication
+✅ JWT
+✅ bcrypt password hashing
+✅ File Upload (CSV/XLSX/XML/JSON)
+✅ Dynamic Templates
+✅ Dynamic Table Creation
+✅ Neon/PostgreSQL deployment
+
+Frontend:
+
+✅ Login page created
+🔄 Connect login page to /api/auth/login
+🔄 Store JWT in localStorage/sessionStorage
+🔄 Protected routes
+🔄 Dashboard integration
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3

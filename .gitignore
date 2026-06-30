@@ -3,3 +3,7 @@ node_modules
 .env
 
 /generated/prisma
+<<<<<<< HEAD
+=======
+test-rl-assets.csv
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3

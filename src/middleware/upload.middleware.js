@@ -2,11 +2,15 @@ const multer = require("multer");
 
 const storage = multer.memoryStorage();
 
+<<<<<<< HEAD
 /*
 |--------------------------------------------------------------------------
 | MIME TYPE MAP
 |--------------------------------------------------------------------------
 */
+=======
+/*MIME TYPE MAP*/
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3
 
 const allowedMimeTypes = new Set([
   // CSV
@@ -35,11 +39,15 @@ const allowedMimeTypes = new Set([
   "text/xml",
 ]);
 
+<<<<<<< HEAD
 /*
 |--------------------------------------------------------------------------
 | EXTENSION WHITELIST
 |--------------------------------------------------------------------------
 */
+=======
+/*EXTENSION WHITELIST*/
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3
 
 const allowedExtensions = new Set([
   ".csv",
@@ -50,11 +58,15 @@ const allowedExtensions = new Set([
   ".xml",
 ]);
 
+<<<<<<< HEAD
 /*
 |--------------------------------------------------------------------------
 | FILE FILTER
 |--------------------------------------------------------------------------
 */
+=======
+/*FILE FILTER*/
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3
 
 const fileFilter = (req, file, cb) => {
   const ext = "." + file.originalname.split(".").pop().toLowerCase();
@@ -79,11 +91,15 @@ const fileFilter = (req, file, cb) => {
   );
 };
 
+<<<<<<< HEAD
 /*
 |--------------------------------------------------------------------------
 | MULTER CONFIG
 |--------------------------------------------------------------------------
 */
+=======
+/*MULTER CONFIG*/
+>>>>>>> 073cb674c90ff3ebe1e65f446f1ea93023ef87f3
 
 const upload = multer({
   storage,
