@@ -9,7 +9,7 @@ const {
   deleteActivity
 
 } = require(
-  "../controller/activity.controller"
+  "../controllers/activity.controller"
 );
 
 const router = express.Router();

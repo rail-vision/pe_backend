@@ -8,7 +8,7 @@ const {
   updateIncome,
   deleteIncome
 
-} = require("../controller/income.controller");
+} = require("../controllers/income.controller");
 
 const router = express.Router();
 

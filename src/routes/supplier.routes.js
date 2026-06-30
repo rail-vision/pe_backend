@@ -9,7 +9,7 @@ const {
   deleteSupplier
 
 } = require(
-  "../controller/supplier.controller"
+  "../controllers/supplier.controller"
 );
 
 const router = express.Router();

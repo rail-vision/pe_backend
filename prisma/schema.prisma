@@ -30,7 +30,7 @@ model income {
 
 model expense {
   expense_id                         String    @id @default(dbgenerated("('EXP-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
-  expense_transaction_id              String?   @unique @db.VarChar(100)
+  expense_transaction_id             String?   @unique @db.VarChar(100)
   expense_destination                String?   @db.VarChar(255)
   expense_destination_type           String?   @db.VarChar(150)
   expense_type                       String?   @db.VarChar(100)
@@ -51,32 +51,32 @@ model expense {
 }
 
 model supplier {
-  supplier_id                          String    @id @default(dbgenerated("('SUP-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
-  supplier_code                        String?   @unique @db.VarChar(100)
-  supplier_start_date                  DateTime? @default(now()) @db.Date
-  supplier_type                        String?   @db.VarChar(100)
+  supplier_id                          String      @id @default(dbgenerated("('SUP-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
+  supplier_code                        String?     @unique @db.VarChar(100)
+  supplier_start_date                  DateTime?   @default(now()) @db.Date
+  supplier_type                        String?     @db.VarChar(100)
   supplier_description                 String?
-  supplier_certifications              String?   @db.VarChar(255)
-  supplier_organisation_size           String?   @db.VarChar(50)
-  supplier_turnover_currency           String?   @db.VarChar(10)
-  supplier_turnover                    Decimal?  @db.Decimal(15, 2)
+  supplier_certifications              String?     @db.VarChar(255)
+  supplier_organisation_size           String?     @db.VarChar(50)
+  supplier_turnover_currency           String?     @db.VarChar(10)
+  supplier_turnover                    Decimal?    @db.Decimal(15, 2)
   supplier_turnover_year               Int?
   supplier_employees_for_turnover_year Int?
-  supplier_blacklisted                 Boolean?  @default(false)
-  supplier_blacklist_date              DateTime? @db.Date
-  supplier_headquarter_country         String?   @db.VarChar(100)
-  supplier_headquarter_city            String?   @db.VarChar(100)
+  supplier_blacklisted                 Boolean?    @default(false)
+  supplier_blacklist_date              DateTime?   @db.Date
+  supplier_headquarter_country         String?     @db.VarChar(100)
+  supplier_headquarter_city            String?     @db.VarChar(100)
   supplier_local_address               String?
-  supplier_pincode                     String?   @db.VarChar(20)
-  supplier_email                       String?   @unique
-  supplier_country_code                String?   @db.VarChar(10)
-  supplier_telephone                   String?   @db.VarChar(20)
+  supplier_pincode                     String?     @db.VarChar(20)
+  supplier_email                       String?     @unique
+  supplier_country_code                String?     @db.VarChar(10)
+  supplier_telephone                   String?     @db.VarChar(20)
   supplier_linkedin                    String?
   supplier_website                     String?
   supplier_references                  String?
-  created_at                           DateTime? @default(now()) @db.Timestamp(6)
-  updated_at                           DateTime? @default(now()) @db.Timestamp(6)
-  inventories inventory[]
+  created_at                           DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at                           DateTime?   @default(now()) @db.Timestamp(6)
+  inventories                          inventory[]
 
   @@map("supplier")
 }
@@ -111,269 +111,168 @@ model DataAsset {
 }
 
 model inventory {
-
-  inventory_id String @id @default(dbgenerated("('INV-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
-
-  item_number String? @unique @db.VarChar(100)
-
-  inventory_name String? @db.VarChar(255)
-
-  inventory_description String?
-
-  division_name String? @db.VarChar(150)
-
-  subdivision_name String? @db.VarChar(150)
-
-  inventory_owner String? @db.VarChar(150)
-
-  quantity Int?
-
-  estimated_lead_time_days Int?
-
-  inventory_price Decimal? @db.Decimal(15, 2)
-
-  inventory_currency String? @db.VarChar(10)
-
-  supplier_name String? @db.VarChar(255)
-
-  supplier_id String? @db.VarChar(50)
-  supplier supplier? @relation(fields: [supplier_id], references: [supplier_id])
-  
-  inventory_category String? @db.VarChar(100)
-
-  inventory_status String? @db.VarChar(100)
-
-  inventory_type String? @db.VarChar(100)
-
-  inventory_location String?
-
-  inventory_storage_type String? @db.VarChar(100)
-
-  inventory_purchase_date DateTime? @db.Date
-
-  inventory_expiry_date DateTime? @db.Date
-
-  inventory_condition String? @db.VarChar(100)
-
-  inventory_serial_number String? @unique @db.VarChar(150)
-
-  inventory_barcode String? @unique @db.VarChar(150)
-
-  inventory_reorder_level Int?
-
-  inventory_maximum_stock Int?
-
-  inventory_minimum_stock Int?
-
-  inventory_unit String? @db.VarChar(50)
-
-  inventory_usage_frequency String? @db.VarChar(100)
-
-  inventory_last_updated DateTime? @default(now()) @db.Timestamp(6)
-
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-
-  updated_at DateTime? @default(now()) @db.Timestamp(6)
-
+  inventory_id              String    @id @default(dbgenerated("('INV-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
+  item_number               String?   @unique @db.VarChar(100)
+  inventory_name            String?   @db.VarChar(255)
+  inventory_description     String?
+  division_name             String?   @db.VarChar(150)
+  subdivision_name          String?   @db.VarChar(150)
+  inventory_owner           String?   @db.VarChar(150)
+  quantity                  Int?
+  estimated_lead_time_days  Int?
+  inventory_price           Decimal?  @db.Decimal(15, 2)
+  inventory_currency        String?   @db.VarChar(10)
+  supplier_name             String?   @db.VarChar(255)
+  supplier_id               String?   @db.VarChar(50)
+  inventory_category        String?   @db.VarChar(100)
+  inventory_status          String?   @db.VarChar(100)
+  inventory_type            String?   @db.VarChar(100)
+  inventory_location        String?
+  inventory_storage_type    String?   @db.VarChar(100)
+  inventory_purchase_date   DateTime? @db.Date
+  inventory_expiry_date     DateTime? @db.Date
+  inventory_condition       String?   @db.VarChar(100)
+  inventory_serial_number   String?   @unique @db.VarChar(150)
+  inventory_barcode         String?   @unique @db.VarChar(150)
+  inventory_reorder_level   Int?
+  inventory_maximum_stock   Int?
+  inventory_minimum_stock   Int?
+  inventory_unit            String?   @db.VarChar(50)
+  inventory_usage_frequency String?   @db.VarChar(100)
+  inventory_last_updated    DateTime? @default(now()) @db.Timestamp(6)
+  created_at                DateTime? @default(now()) @db.Timestamp(6)
+  updated_at                DateTime? @default(now()) @db.Timestamp(6)
+  custom_fields             Json?
+  supplier                  supplier? @relation(fields: [supplier_id], references: [supplier_id])
 }
 
 model activity {
-
-  activity_id             String    @id @default(dbgenerated("('ACT-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
-
-  activity_name           String    @db.VarChar(255)
-
-  activity_description    String?
-
-  related_module          String?   @db.VarChar(100)
-
-  related_record_id       String?   @db.VarChar(100)
-
-  activity_owner          String?   @db.VarChar(255)
-
-  activity_status         String?   @db.VarChar(50)
-
-  start_date              DateTime? @db.Date
-
-  target_completion_date  DateTime? @db.Date
-
-  actual_completion_date  DateTime? @db.Date
-
-  target_quantity         Int?
-
-  actual_quantity         Int?
-
-  efficiency_percentage   Decimal?  @db.Decimal(5,2)
-
-  remarks                 String?
-
-  created_at              DateTime? @default(now())
-
-  updated_at              DateTime? @updatedAt
+  activity_id            String    @id @default(dbgenerated("('ACT-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
+  activity_name          String    @db.VarChar(255)
+  activity_description   String?
+  related_module         String?   @db.VarChar(100)
+  related_record_id      String?   @db.VarChar(100)
+  activity_owner         String?   @db.VarChar(255)
+  activity_status        String?   @db.VarChar(50)
+  start_date             DateTime? @db.Date
+  target_completion_date DateTime? @db.Date
+  actual_completion_date DateTime? @db.Date
+  target_quantity        Int?
+  actual_quantity        Int?
+  efficiency_percentage  Decimal?  @db.Decimal(5, 2)
+  remarks                String?
+  created_at             DateTime? @default(now())
+  updated_at             DateTime? @updatedAt
 }
 
 model department {
-
-  department_id String @id @default(dbgenerated("('DEP-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
-
-  department_name String @unique @db.VarChar(255)
-
-  department_head String? @db.VarChar(255)
-
+  department_id          String    @id @default(dbgenerated("('DEP-'::text || upper(SUBSTRING(md5((random())::text) FROM 1 FOR 8)))")) @db.VarChar(50)
+  department_name        String    @unique @db.VarChar(255)
+  department_head        String?   @db.VarChar(255)
   department_description String?
-
-  department_status String? @default("Active") @db.VarChar(50)
-
-  department_location String? @db.VarChar(255)
-
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-
-  updated_at DateTime? @updatedAt @db.Timestamp(6)
-}model Asset {
-
-  id                             String   @id @default(uuid())
-
-  assetId                        String   @unique
-
-  assetCode                      String
-
-  ownerId                        String
-
-  assetName                      String
-
-  assetDescription               String
-
-  purchaseDate                   DateTime
-
-  assetCurrency                  String
-
-  purchaseValue                  Float
-
-  currentValue                   Float
-
-  depreciation                   Float
-
-  assetLife                      Int
-
-  assetLiquidityLevel            Float
-
-  annualAssetUsageLevel          Float
-
-  assetManufacturer              String
-
-  assetManufacturingCountry      String
-
-  assetWarrantyPeriod            Int
-
-  assetMaintenanceContract       Boolean
-
-  assetMaintenanceContractor     String?
-
-  assetAnnualMaintenanceCost     Float?
-
-  expectedMeanTimeBetweenFailure Float
-
-  assetCategory                  String
-
-  assetDimensions                String
-
-  assetWeight                    String
-
-  assetLocationGPS               String
-
-  assetLocationAddress           String
-
-  createdAt                      DateTime @default(now())
-
-  updatedAt                      DateTime @updatedAt
+  department_status      String?   @default("Active") @db.VarChar(50)
+  department_location    String?   @db.VarChar(255)
+  created_at             DateTime? @default(now()) @db.Timestamp(6)
+  updated_at             DateTime? @updatedAt @db.Timestamp(6)
 }
 
-model People {
-
-  id                     String       @id @default(uuid())
-
-  personId               String       @unique
-
-  employeeCode           String?
-
-  personName             String
-
-  personStatus           PersonStatus
-
-  designation            String
-
-  designationDescription String?
-
-  workStatus             WorkStatus
-
-  personAddress          String
-
-  country                String
-
-  functionalUnit         String
-
-  startDate              DateTime
-
-  workEmail              String       @unique
-
-  personalEmail          String?
-
-  workPhone              String
-
-  expertise              String
-
-  workPeriod             WorkPeriod
-
-  driversLicense         Boolean
-
-  createdAt              DateTime     @default(now())
-
-  updatedAt              DateTime     @updatedAt
+model inventory_template_1 {
+  id             Int       @id @default(autoincrement())
+  item_number    String?
+  inventory_name String?
+  quantity       Int?
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
 }
 
-model employees {
-
-  id         Int       @id @default(autoincrement())
-
-  name       String?   @db.VarChar(255)
-
-  created_at DateTime? @default(now()) @db.Timestamp(6)
+model supplier_template_1 {
+  id             Int       @id @default(autoincrement())
+  supplier_code  String?
+  supplier_email String?
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
 }
 
-model students {
-
-  id         Int       @id @default(autoincrement())
-
-  name       String?   @db.VarChar(255)
-
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-}
-model Template {
-
-  id           String   @id @default(uuid())
-
-  templateName String
-
-  module       String
-
-  fields       Json
-
-  createdAt    DateTime @default(now())
-
+model FieldMapping {
+  mapping_id   Int      @id @default(autoincrement())
+  module_name  String
+  source_field String
+  target_field String
+  created_at   DateTime @default(now())
 }
 
-enum PersonStatus {
-  FULL_TIME
-  PART_TIME
+model Presentation {
+  id Int @id @default(autoincrement())
+
+  presentationId String @unique
+
+  title String
+
+  description String?
+
+  module String
+
+  presentationType String // Auto | Custom | Imported
+
+  theme String? // Corporate | Dark | Light
+
+  status String @default("Draft")
+
+  totalSlides Int @default(0)
+
+  createdBy String?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  slides Slide[]
+
+  exports PresentationExport[]
 }
 
-enum WorkStatus {
-  ACTIVE
-  NON_ACTIVE
+model Slide {
+  id Int @id @default(autoincrement())
+
+  slideId String @unique
+
+  presentationId Int
+
+  slideNumber Int
+
+  title String?
+
+  subtitle String?
+
+  body String?
+
+  layout String
+
+  imageUrl String?
+
+  chartType String?
+
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  presentation Presentation @relation(fields: [presentationId], references: [id], onDelete: Cascade)
 }
 
-enum WorkPeriod {
-  DAY_ONLY
-  NIGHT_ONLY
-  FLEXIBLE
+model PresentationExport {
+  id Int @id @default(autoincrement())
+
+  exportId String @unique
+
+  presentationId Int
+
+  exportType String
+
+  fileName String
+
+  fileUrl String
+
+  generatedBy String?
+
+  generatedAt DateTime @default(now())
+
+  presentation Presentation @relation(fields: [presentationId], references: [id], onDelete: Cascade)
 }

@@ -8,7 +8,7 @@ const {
   updateInventory,
   deleteInventory
 
-} = require("../controller/inventory.controller");
+} = require("../controllers/inventory.controller");
 
 const router = express.Router();
 

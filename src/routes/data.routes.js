@@ -8,7 +8,7 @@ const {
   updateDataAsset,
   deleteDataAsset
 
-} = require("../controller/data.controller");
+} = require("../controllers/data.controller");
 
 const router = express.Router();
 

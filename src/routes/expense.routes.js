@@ -9,7 +9,7 @@ const {
   deleteExpense
 
 } = require(
-  "../controller/expense.controller"
+  "../controllers/expense.controller"
 );
 
 const router = express.Router();

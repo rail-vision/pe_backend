@@ -9,7 +9,7 @@ const {
   deleteDepartment
 
 } = require(
-  "../controller/department.controller"
+  "../controllers/department.controller"
 );
 
 const router = express.Router();

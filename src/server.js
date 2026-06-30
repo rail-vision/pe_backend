@@ -17,15 +17,15 @@ const activityRoutes = require("./routes/activity.routes");
 
 const departmentRoutes = require("./routes/department.routes");
 
-const dynamicRoutes =require("./routes/dynamic.routes");
+const clusterRoutes = require("./routes/cluster.routes");
 
-const departmentRoutes = require("./routes/departmentRoutes");
-const peopleRoutes   = require("./routes/people.routes");
-const assetRoutes    = require("./routes/asset.routes");
-const uploadRoutes   = require("./routes/upload.routes");
 const dynamicRoutes  = require("./routes/dynamic.routes");
 const templateRoutes = require("./routes/template.routes");
+const fieldMappingRoutes = require("./routes/fieldMapping.routes");
+const predictRoutes = require("./routes/predict.routes");
+const autoAIRoutes = require("./routes/autoAI.routes");
 
+const presentationRoutes = require("./routes/presentation.routes");
 const app = express();
 
 app.use(cors());
@@ -54,13 +54,16 @@ app.use('/api/activity', activityRoutes);
 
 app.use('/api/department',departmentRoutes);
 
-app.use("/api/dynamic",dynamicRoutes);
-app.use("/api/people",    peopleRoutes);
-app.use("/api/assets",    assetRoutes);
-app.use("/api/upload",    uploadRoutes);
-app.use("/api/dynamic",   dynamicRoutes);
+app.use("/api/dynamic", dynamicRoutes);
 app.use("/api/templates", templateRoutes);
+app.use("/api/mapping",fieldMappingRoutes);
+app.use("/api/cluster",clusterRoutes);
+app.use("/api/predict",predictRoutes);
+app.use("/api/auto-ai",autoAIRoutes);
 
+console.log("Registering Presentation Routes...");
+app.use("/api/presentation", presentationRoutes);
+console.log("Presentation Routes Registered");
 app.use((err, req, res, next) => {
   console.error("[Global Error]", err.code ?? "NO_CODE", err.message);
 
