@@ -17,6 +17,7 @@ const distributionRoutes = require("./routes/distribution.routes");
 const presentationRoutes = require("./routes/presentation.routes");
 
 const errorHandler = require("./middleware/error.middleware");
+const { generalLimiter, authLimiter , uploadLimiter } = require("./middleware/rateLimiter.middleware");
 
 const app = express();
 
@@ -25,12 +26,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api", generalLimiter);
+app.use("/api/auth/login",    authLimiter);
+app.use("/api/auth/register", authLimiter);
+
 
 /*API ROUTES*/
 
 app.use("/api/auth", authRoutes);
 app.use("/api/people", peopleRoutes);
 app.use("/api/assets", assetRoutes);
+app.use("/api/upload", uploadLimiter);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/dynamic", dynamicRoutes);
 app.use("/api/templates", templateRoutes);
@@ -49,6 +55,7 @@ app.use("/api/heatmap", heatmapRoutes);
 app.use("/api/distribution", distributionRoutes);
 
 app.use("/api/presentation", presentationRoutes);
+
 
 /*DEFAULT ROUTE*/
 
